@@ -23,4 +23,6 @@ namespace MACHINE_TEST
     {
     public B();
     }
+
+    class C{}
 }
