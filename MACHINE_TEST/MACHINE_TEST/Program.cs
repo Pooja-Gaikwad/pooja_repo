@@ -18,4 +18,9 @@ namespace MACHINE_TEST
     {
     public int ID { get; set; }
     }
+
+    class B
+    {
+    public B();
+    }
 }
