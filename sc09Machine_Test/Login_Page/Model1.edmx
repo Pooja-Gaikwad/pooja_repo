@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="sb09MachineTestModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="sb09MachineTestModelStoreContainer">
+          <EntitySet Name="cart" EntityType="sb09MachineTestModel.Store.cart" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FoodDetails_nonveg" EntityType="sb09MachineTestModel.Store.FoodDetails_nonveg" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FoodDetails_veg" EntityType="sb09MachineTestModel.Store.FoodDetails_veg" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Login" EntityType="sb09MachineTestModel.Store.Login" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="orderHistory" EntityType="sb09MachineTestModel.Store.orderHistory" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__orderHist__useri__1DE57479" Association="sb09MachineTestModel.Store.FK__orderHist__useri__1DE57479">
+            <End Role="Login" EntitySet="Login" />
+            <End Role="orderHistory" EntitySet="orderHistory" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="cart">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="foodname" Type="varchar" MaxLength="50" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="price" Type="int" />
+        </EntityType>
+        <EntityType Name="FoodDetails_nonveg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Food_name" Type="varchar" MaxLength="50" />
+          <Property Name="Ingredients" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="int" />
+        </EntityType>
+        <EntityType Name="FoodDetails_veg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Food_name" Type="varchar" MaxLength="50" />
+          <Property Name="Ingredients" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="int" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="uName" Type="varchar" MaxLength="20" />
+          <Property Name="uPassword" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="orderHistory">
+          <Key>
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="orderid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="totalprice" Type="int" />
+          <Property Name="orderdate" Type="date" />
+          <Property Name="userid" Type="int" />
+        </EntityType>
+        <Association Name="FK__orderHist__useri__1DE57479">
+          <End Role="Login" Type="sb09MachineTestModel.Store.Login" Multiplicity="0..1" />
+          <End Role="orderHistory" Type="sb09MachineTestModel.Store.orderHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="orderHistory">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="usp_orderlist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="int" Mode="In" />
+          <Parameter Name="totalprice" Type="int" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="sb09MachineTestModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="sb09DBcontext" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Logins" EntityType="sb09MachineTestModel.Login" />
+          <EntitySet Name="FoodDetails_nonveg" EntityType="sb09MachineTestModel.FoodDetails_nonveg" />
+          <EntitySet Name="FoodDetails_veg" EntityType="sb09MachineTestModel.FoodDetails_veg" />
+          <EntitySet Name="carts" EntityType="sb09MachineTestModel.cart" />
+          <EntitySet Name="orderHistories" EntityType="sb09MachineTestModel.orderHistory" />
+          <AssociationSet Name="FK__orderHist__useri__1DE57479" Association="sb09MachineTestModel.FK__orderHist__useri__1DE57479">
+            <End Role="Login" EntitySet="Logins" />
+            <End Role="orderHistory" EntitySet="orderHistories" />
+          </AssociationSet>
+          <FunctionImport Name="usp_orderlist">
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="totalprice" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="uName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="uPassword" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="orderHistories" Relationship="sb09MachineTestModel.FK__orderHist__useri__1DE57479" FromRole="Login" ToRole="orderHistory" />
+        </EntityType>
+        <EntityType Name="FoodDetails_nonveg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Food_name" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Ingredients" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="Price" />
+        </EntityType>
+        <EntityType Name="FoodDetails_veg">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Food_name" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Ingredients" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="Price" />
+        </EntityType>
+        <EntityType Name="cart">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="foodname" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="quantity" />
+          <Property Type="Int32" Name="price" />
+        </EntityType>
+        <EntityType Name="orderHistory">
+          <Key>
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Type="Int32" Name="orderid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="totalprice" />
+          <Property Type="DateTime" Name="orderdate" Precision="0" />
+          <Property Type="Int32" Name="userid" />
+          <NavigationProperty Name="Login" Relationship="sb09MachineTestModel.FK__orderHist__useri__1DE57479" FromRole="orderHistory" ToRole="Login" />
+        </EntityType>
+        <Association Name="FK__orderHist__useri__1DE57479">
+          <End Type="sb09MachineTestModel.Login" Role="Login" Multiplicity="0..1" />
+          <End Type="sb09MachineTestModel.orderHistory" Role="orderHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="orderHistory">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="sb09MachineTestModelStoreContainer" CdmEntityContainer="sb09DBcontext">
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="sb09MachineTestModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="uName" ColumnName="uName" />
+                <ScalarProperty Name="uPassword" ColumnName="uPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodDetails_nonveg">
+            <EntityTypeMapping TypeName="sb09MachineTestModel.FoodDetails_nonveg">
+              <MappingFragment StoreEntitySet="FoodDetails_nonveg">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Ingredients" ColumnName="Ingredients" />
+                <ScalarProperty Name="Food_name" ColumnName="Food_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodDetails_veg">
+            <EntityTypeMapping TypeName="sb09MachineTestModel.FoodDetails_veg">
+              <MappingFragment StoreEntitySet="FoodDetails_veg">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Ingredients" ColumnName="Ingredients" />
+                <ScalarProperty Name="Food_name" ColumnName="Food_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="carts">
+            <EntityTypeMapping TypeName="sb09MachineTestModel.cart">
+              <MappingFragment StoreEntitySet="cart">
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="foodname" ColumnName="foodname" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orderHistories">
+            <EntityTypeMapping TypeName="sb09MachineTestModel.orderHistory">
+              <MappingFragment StoreEntitySet="orderHistory">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="orderdate" ColumnName="orderdate" />
+                <ScalarProperty Name="totalprice" ColumnName="totalprice" />
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_orderlist" FunctionName="sb09MachineTestModel.Store.usp_orderlist" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
