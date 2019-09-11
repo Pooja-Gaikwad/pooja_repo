@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="37af1f28fb3642e0bb89cf540b359095" Name="Diagram1">
+        <EntityTypeShape EntityType="sb09MachineTestModel.Login" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sb09MachineTestModel.FoodDetails_nonveg" Width="1.5" PointX="4.625" PointY="0.75" />
+        <EntityTypeShape EntityType="sb09MachineTestModel.FoodDetails_veg" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="sb09MachineTestModel.cart" Width="1.5" PointX="6.625" PointY="0.75" />
+        <EntityTypeShape EntityType="sb09MachineTestModel.orderHistory" Width="1.5" PointX="12" PointY="7.25" />
+        <AssociationConnector Association="sb09MachineTestModel.FK__orderHist__useri__1DE57479" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
